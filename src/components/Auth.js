@@ -9,10 +9,13 @@ function Auth() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [shouldAutoSignIn, setShouldAutoSignIn] = useState(false); // Add a flag for auto sign-in
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
+      setIsLoggedIn(!!user); // Update the login status based on user existence
     });
 
     return () => unsubscribe();
@@ -43,9 +46,14 @@ function Auth() {
         uid: newUser.uid,
         username,
       });
-      await auth.signOut();
+
       setEmail('');
       setPassword('');
+
+      // Only auto sign in if shouldAutoSignIn is true
+      if (shouldAutoSignIn) {
+        await auth.signInWithEmailAndPassword(email, password);
+      }
     } catch (error) {
       setError(error.message);
     }
@@ -55,12 +63,12 @@ function Auth() {
     auth.signOut();
   };
 
-  const googleAuthProvider = new firebase.auth.GoogleAuthProvider(); // Create Google Auth Provider
+  const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
   const handleGoogleSignIn = async () => {
     try {
       setError(null);
-      await auth.signInWithPopup(googleAuthProvider); // Use Google Sign-In
+      await auth.signInWithPopup(googleAuthProvider);
     } catch (error) {
       setError(error.message);
     }
@@ -92,6 +100,15 @@ function Auth() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <br />
+          <label>
+            Auto Sign In After Registration:
+            <input
+              type="checkbox"
+              checked={shouldAutoSignIn}
+              onChange={(e) => setShouldAutoSignIn(e.target.checked)}
+            />
+          </label>
           <br />
           <button className="button" onClick={handleSignUp}>Sign Up</button>
           <button className="button" onClick={handleSignIn}>Sign In</button>
