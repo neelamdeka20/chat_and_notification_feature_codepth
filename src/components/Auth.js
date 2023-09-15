@@ -6,7 +6,7 @@ import './Auth.css';
 import Chat from './Chat'; // Import the Chat component
 
 function Auth() {
-  const [user, setUser] = useState(null);
+  const [setUser] = useState(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
