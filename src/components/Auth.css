@@ -1,0 +1,54 @@
+.aut-container {
+  background-color: #caccf0;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    width: 400px;
+    height: 500px;
+  }
+  
+  .input1 {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .inputs {
+    width: 100%;
+    padding: 10px;
+    margin: 50px 0;
+    border-radius: 20px;
+  }
+  
+  .button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 20px 10px;
+  }
+  
+  .button:hover {
+    background-color: #0056b3;
+  }
+  
+  .error {
+    color: red;
+  }
+  
+  h2 {
+    color: #1f08ef;
+    text-transform: uppercase;
+    -webkit-text-stroke: 1px rgb(249, 193, 8);
+  }
+  
+  .heading {
+    color: #1f08ef;
+    margin: 10px;
+  }
