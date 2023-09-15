@@ -43,7 +43,7 @@ function Auth() {
         uid: newUser.uid,
         username,
       });
-
+      await auth.signOut();
       setEmail('');
       setPassword('');
     } catch (error) {
