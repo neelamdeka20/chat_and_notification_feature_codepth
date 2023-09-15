@@ -10,12 +10,11 @@ function Auth() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [shouldAutoSignIn, setShouldAutoSignIn] = useState(false); // Add a flag for auto sign-in
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
-      setIsLoggedIn(!!user); // Update the login status based on user existence
+      setIsLoggedIn(!!user);
     });
 
     return () => unsubscribe();
@@ -50,8 +49,8 @@ function Auth() {
       setEmail('');
       setPassword('');
 
-      // Only auto sign in if shouldAutoSignIn is true
-      if (shouldAutoSignIn) {
+      // Only auto sign in if isLoggedIn is true
+      if (isLoggedIn) {
         await auth.signInWithEmailAndPassword(email, password);
       }
     } catch (error) {
@@ -102,11 +101,11 @@ function Auth() {
           />
           <br />
           <label>
-            Auto Sign In After Registration:
+            Automatically Sign In After Registration:
             <input
               type="checkbox"
-              checked={shouldAutoSignIn}
-              onChange={(e) => setShouldAutoSignIn(e.target.checked)}
+              checked={isLoggedIn}
+              onChange={() => setIsLoggedIn(!isLoggedIn)}
             />
           </label>
           <br />
