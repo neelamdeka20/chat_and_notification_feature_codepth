@@ -3,19 +3,16 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { auth, firestore } from '../firebase';
 import './Auth.css';
-import Chat from './Chat'; // Import the Chat component
 
 function Auth() {
-  const [setUser] = useState(null);
+  const [user, setUser] = useState(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Add a state for tracking login status
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
-      setIsLoggedIn(!!user); // Update the login status based on user existence
     });
 
     return () => unsubscribe();
@@ -54,6 +51,10 @@ function Auth() {
     }
   };
 
+  const handleSignOut = () => {
+    auth.signOut();
+  };
+
   const googleAuthProvider = new firebase.auth.GoogleAuthProvider(); // Create Google Auth Provider
 
   const handleGoogleSignIn = async () => {
@@ -67,8 +68,11 @@ function Auth() {
 
   return (
     <div className="aut-container">
-      {isLoggedIn ? ( // Conditionally render the chat when the user is logged in
-        <Chat />
+      {user ? (
+        <div>
+          <h2>Welcome, {getUsernameFromEmail(user.email)}</h2>
+          <button className="button" onClick={handleSignOut}>Sign Out</button>
+        </div>
       ) : (
         <div className='inputs'>
           <div className='heading'>
