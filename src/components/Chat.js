@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { auth, firestore } from '../firebase';
+import { firestore } from '../firebase';
 import './Chat.css';
 
 function Chat() {
@@ -8,14 +8,6 @@ function Chat() {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const messagesEndRef = useRef(null);
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setUser(user);
-    });
-
-    return () => unsubscribe();
-  }, []);
 
   useEffect(() => {
     const messagesRef = firestore.collection('messages').orderBy('timestamp', 'desc');
@@ -48,7 +40,7 @@ function Chat() {
 
   useEffect(() => {
     scrollToBottom(); // Scroll to the bottom whenever new messages are received
-  }, [messages]); 
+  }, [messages]);
 
   const handleSendMessage = () => {
     setError(null);
@@ -69,10 +61,6 @@ function Chat() {
           setError(error.message);
         });
     }
-  };
-
-  const handleSignOut = () => {
-    auth.signOut();
   };
 
   return (
@@ -101,7 +89,6 @@ function Chat() {
           Send
         </button>
       </div>
-      {!user && <p>Please sign in to chat.</p>}
       {error && <p className="error">{error}</p>}
     </div>
   );
