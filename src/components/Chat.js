@@ -8,7 +8,14 @@ function Chat() {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const messagesEndRef = useRef(null);
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
 
+    return () => unsubscribe();
+  }, []);
+  
   useEffect(() => {
     const messagesRef = firestore.collection('messages').orderBy('timestamp', 'desc');
 
