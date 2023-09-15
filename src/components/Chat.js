@@ -50,9 +50,6 @@ function Chat() {
     scrollToBottom(); // Scroll to the bottom whenever new messages are received
   }, [messages]); 
 
-  const handleSendMessage = () => {
-    setError(null);
-
     if (text.trim() !== '') {
       firestore
         .collection('messages')
