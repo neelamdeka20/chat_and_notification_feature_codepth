@@ -48,11 +48,6 @@ function Auth() {
 
       setEmail('');
       setPassword('');
-
-      // Only auto sign in if isLoggedIn is true
-      if (isLoggedIn) {
-        await auth.signInWithEmailAndPassword(email, password);
-      }
     } catch (error) {
       setError(error.message);
     }
@@ -99,15 +94,6 @@ function Auth() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <br />
-          <label>
-            Automatically Sign In After Registration:
-            <input
-              type="checkbox"
-              checked={isLoggedIn}
-              onChange={() => setIsLoggedIn(!isLoggedIn)}
-            />
-          </label>
           <br />
           <button className="button" onClick={handleSignUp}>Sign Up</button>
           <button className="button" onClick={handleSignIn}>Sign In</button>
